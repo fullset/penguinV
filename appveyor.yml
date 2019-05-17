@@ -13,6 +13,9 @@ image: Visual Studio 2015
 
 environment:
   matrix:
+    - JOB: ARM
+      configuration: Release
+      arch: arm
     - JOB: Release_x86
       configuration: Release
       platform: x86
