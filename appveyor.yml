@@ -14,7 +14,7 @@ image: Visual Studio 2015
 environment:
   matrix:
     - JOB: ARM
-      configuration: Release
+      configuration: Debug
       arch: arm
     - JOB: Release_x86
       configuration: Release
@@ -53,6 +53,7 @@ clone_folder: C:\projects\penguinv
 
 # scripts to run before build
 before_build:
+  - cmd: echo %arch%
   - cmd: if "%configuration%"=="Release" call script\appveyor\cuda_install.cmd
 
 build_script:
