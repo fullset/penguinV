@@ -80,7 +80,7 @@ namespace Image_Function
                           uint32_t startYOut, uint32_t width, uint32_t height, uint8_t channelId );
 
     void Fill( Image & image, uint8_t value );
-    void Fill( Image & image, uint32_t x, uint32_t y, uint32_t width, uint32_t height, uint8_t value );
+    void Fill( Image & image, uint32_t x, uint32_t y, uint32_t width, uint32_t height, uint8_t value );    
 
     // Make sure that input parameters such as input and output images are not same image!
     // horizontal flip: left-right --> right-left
@@ -91,6 +91,8 @@ namespace Image_Function
                 bool horizontal, bool vertical );
     void  Flip( const Image & in, uint32_t startXIn, uint32_t startYIn, Image & out, uint32_t startXOut, uint32_t startYOut,
                 uint32_t width, uint32_t height, bool horizontal, bool vertical );
+
+    void FloodFill(Image & image, uint32_t seedX, uint32_t seedY, uint8_t seedIntensity);
 
     // Gamma correction works by formula:
     // output = A * ((input / 255) ^ gamma) * 255, where A - multiplication, gamma - power base. Both values must be greater than 0

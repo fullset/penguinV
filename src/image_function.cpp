@@ -3,6 +3,9 @@
 #include "parameter_validation.h"
 #include "image_function_helper.h"
 
+#include <queue>
+#include <iostream>
+
 namespace
 {
     struct FunctionRegistrator
@@ -786,6 +789,108 @@ namespace Image_Function
                         (*outX) = (*inX);
                 }
             }
+        }
+    }
+
+    void FloodFill(Image & image, uint32_t seedX, uint32_t seedY, uint8_t seedIntensity)
+    {
+//        ParameterValidation( image, seedX, seedY);
+
+        const uint32_t rowSize = image.rowSize();
+        const uint32_t rowsCount = image.height();
+
+        uint8_t * start = image.data() + seedY * rowSize + seedX;
+
+        if (*start == seedIntensity)
+            return;
+
+        std::queue<std::tuple<uint8_t* , uint32_t, uint32_t>> Q;
+        Q.push(std::make_tuple(start, seedX, seedY));
+
+        std::tuple<uint8_t* , uint32_t, uint32_t> T;
+
+        while( !Q.empty() ){
+
+            auto N = Q.front();
+
+            uint8_t *currentPixel = std::get<0>(N);
+            uint32_t coordX = std::get<1>(N);
+            uint32_t coordY = std::get<2>(N);
+
+            uint8_t *w = currentPixel;
+            uint8_t *e = currentPixel;
+
+            *currentPixel = seedIntensity;
+
+//            do {
+//                *w = seedIntensity;
+//                if (coordY > 0) {
+////                    if ( coordX != 0 && *(w - rowSize - 1) != seedIntensity )
+////                        Q.push(std::make_tuple(w - rowSize - 1, coordX - 1, coordY - 1));
+
+//                    if ( *(w - rowSize) != seedIntensity )
+//                        Q.push(std::make_tuple(w - rowSize, coordX, coordY - 1));
+
+////                    if ( coordX != rowSize && *(w - rowSize + 1) != seedIntensity )
+////                        Q.push(std::make_tuple(w - rowSize + 1, coordX + 1, coordY - 1));
+//                }
+
+//                if (coordY < rowsCount - 1) {
+////                    if ( coordX != 0 && *(w + rowSize - 1) != seedIntensity )
+////                        Q.push(std::make_tuple(w + rowSize - 1, coordX - 1, coordY + 1));
+
+//                    if ( *(w + rowSize) != seedIntensity )
+//                        Q.push(std::make_tuple(w + rowSize, coordX, coordY + 1));
+
+////                    if ( coordX != rowSize && *(w + rowSize + 1) != seedIntensity )
+////                        Q.push(std::make_tuple(w + rowSize + 1, coordX + 1, coordY + 1));
+//                }
+
+////                std::cout << coordX << " " << coordY << std::endl;
+
+//                --w;
+//                if (coordX != 0)
+//                    --coordX;
+//                else
+//                    break;
+//            } while( *w != seedIntensity );
+
+            coordX = std::get<1>(N);
+
+            do {
+                *e = seedIntensity;
+                if (coordY > 0) {
+//                    if ( coordX != 0 && *(e - rowSize - 1) != seedIntensity )
+//                        Q.push(std::make_tuple(e - rowSize - 1, coordX - 1, coordY - 1));
+
+                    if ( *(e - rowSize) != seedIntensity )
+                        Q.push(std::make_tuple(e - rowSize, coordX, coordY - 1));
+
+//                    if ( coordX != rowSize && *(e - rowSize + 1) != seedIntensity )
+//                        Q.push(std::make_tuple(e - rowSize + 1, coordX + 1, coordY - 1));
+                }
+
+                if (coordY < rowsCount - 1) {
+//                    if ( coordX != 0 && *(e + rowSize - 1) != seedIntensity )
+//                        Q.push(std::make_tuple(e + rowSize - 1, coordX - 1, coordY + 1));
+
+                    if ( *(e + rowSize) != seedIntensity )
+                        Q.push(std::make_tuple(e + rowSize, coordX, coordY + 1));
+
+//                    if ( coordX != rowSize && *(e + rowSize + 1) != seedIntensity )
+//                        Q.push(std::make_tuple(e + rowSize + 1, coordX + 1, coordY + 1));
+                }
+
+                std::cout << coordX << " " << coordY << std::endl;
+
+                ++e;
+                if (coordX < rowSize - 1)
+                    ++coordX;
+                else
+                    break;
+            } while( *e != seedIntensity );
+
+            Q.pop();
         }
     }
 
