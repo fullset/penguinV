@@ -820,40 +820,46 @@ namespace Image_Function
             uint8_t *w = currentPixel;
             uint8_t *e = currentPixel;
 
+            if (*currentPixel == seedIntensity)
+            {
+                Q.pop();
+                continue;
+            }
+
             *currentPixel = seedIntensity;
 
-//            do {
-//                *w = seedIntensity;
-//                if (coordY > 0) {
-////                    if ( coordX != 0 && *(w - rowSize - 1) != seedIntensity )
-////                        Q.push(std::make_tuple(w - rowSize - 1, coordX - 1, coordY - 1));
+            do {
+                *w = seedIntensity;
+                if (coordY > 0) {
+//                    if ( coordX != 0 && *(w - rowSize - 1) != seedIntensity )
+//                        Q.push(std::make_tuple(w - rowSize - 1, coordX - 1, coordY - 1));
 
-//                    if ( *(w - rowSize) != seedIntensity )
-//                        Q.push(std::make_tuple(w - rowSize, coordX, coordY - 1));
+                    if ( *(w - rowSize) != seedIntensity )
+                        Q.push(std::make_tuple(w - rowSize, coordX, coordY - 1));
 
-////                    if ( coordX != rowSize && *(w - rowSize + 1) != seedIntensity )
-////                        Q.push(std::make_tuple(w - rowSize + 1, coordX + 1, coordY - 1));
-//                }
+//                    if ( coordX != rowSize && *(w - rowSize + 1) != seedIntensity )
+//                        Q.push(std::make_tuple(w - rowSize + 1, coordX + 1, coordY - 1));
+                }
 
-//                if (coordY < rowsCount - 1) {
-////                    if ( coordX != 0 && *(w + rowSize - 1) != seedIntensity )
-////                        Q.push(std::make_tuple(w + rowSize - 1, coordX - 1, coordY + 1));
+                if (coordY < rowsCount - 1) {
+//                    if ( coordX != 0 && *(w + rowSize - 1) != seedIntensity )
+//                        Q.push(std::make_tuple(w + rowSize - 1, coordX - 1, coordY + 1));
 
-//                    if ( *(w + rowSize) != seedIntensity )
-//                        Q.push(std::make_tuple(w + rowSize, coordX, coordY + 1));
+                    if ( *(w + rowSize) != seedIntensity )
+                        Q.push(std::make_tuple(w + rowSize, coordX, coordY + 1));
 
-////                    if ( coordX != rowSize && *(w + rowSize + 1) != seedIntensity )
-////                        Q.push(std::make_tuple(w + rowSize + 1, coordX + 1, coordY + 1));
-//                }
+//                    if ( coordX != rowSize && *(w + rowSize + 1) != seedIntensity )
+//                        Q.push(std::make_tuple(w + rowSize + 1, coordX + 1, coordY + 1));
+                }
 
-////                std::cout << coordX << " " << coordY << std::endl;
+//                std::cout << coordX << " " << coordY << std::endl;
 
-//                --w;
-//                if (coordX != 0)
-//                    --coordX;
-//                else
-//                    break;
-//            } while( *w != seedIntensity );
+                --w;
+                if (coordX != 0)
+                    --coordX;
+                else
+                    break;
+            } while( *w != seedIntensity );
 
             coordX = std::get<1>(N);
 
